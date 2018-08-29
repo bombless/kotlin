@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.platform
 
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.ServiceManager
 
 interface DefaultIdeTargetPlatformKindProvider {
@@ -12,6 +13,12 @@ interface DefaultIdeTargetPlatformKindProvider {
 
     companion object {
         val defaultPlatform: IdePlatform<*, *>
-            get() = ServiceManager.getService(DefaultIdeTargetPlatformKindProvider::class.java).defaultPlatform
+            get() {
+                if (ApplicationManager.getApplication() == null) {
+                    // TODO support passing custom platforms in JPS
+                    error("Application is 'null', are you calling this code from JPS?")
+                }
+                return ServiceManager.getService(DefaultIdeTargetPlatformKindProvider::class.java).defaultPlatform
+            }
     }
 }

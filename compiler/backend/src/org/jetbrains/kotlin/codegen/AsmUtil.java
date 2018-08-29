@@ -381,6 +381,9 @@ public class AsmUtil {
         }
 
         if (memberVisibility == Visibilities.LOCAL && memberDescriptor instanceof CallableMemberDescriptor) {
+            if (memberDescriptor instanceof AccessorForCallableDescriptor<?>) {
+                return NO_FLAG_PACKAGE_PRIVATE;
+            }
             return ACC_PUBLIC;
         }
 

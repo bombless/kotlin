@@ -772,7 +772,8 @@ class PsiInlineCodegen(
         assert(isInlinableParameterExpression(ktLambda)) { "Couldn't find inline expression in ${expression.text}" }
 
         return PsiExpressionLambda(
-            ktLambda!!, typeMapper, parameter.isCrossinline, getBoundCallableReferenceReceiver(expression) != null
+            ktLambda!!, typeMapper, state.languageVersionSettings,
+            parameter.isCrossinline, getBoundCallableReferenceReceiver(expression) != null
         ).also { lambda ->
             val closureInfo = invocationParamBuilder.addNextValueParameter(type, true, null, parameter.index)
             closureInfo.lambda = lambda

@@ -1010,10 +1010,6 @@ public class ExpressionCodegen extends KtVisitor<StackValue, StackValue> impleme
                 declaration.getContainingFile()
         );
 
-        if (descriptor instanceof AnonymousFunctionDescriptor && declaration instanceof KtFunctionLiteral) {
-            recordCallLabelForLambdaArgument((KtFunctionLiteral) declaration, state.getBindingTrace());
-        }
-
         ClosureCodegen coroutineCodegen = CoroutineCodegenForLambda.create(this, descriptor, declaration, cv);
         ClosureContext closureContext = descriptor.isSuspend() ? this.context.intoCoroutineClosure(
                 CoroutineCodegenUtilKt.getOrCreateJvmSuspendFunctionView(descriptor, state),

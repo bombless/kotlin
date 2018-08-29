@@ -443,11 +443,6 @@ fun KotlinType.isInlineClassTypeWithPrimitiveEquality(): Boolean {
 fun CallableDescriptor.needsExperimentalCoroutinesWrapper() =
     (this as? DeserializedMemberDescriptor)?.coroutinesExperimentalCompatibilityMode == CoroutinesCompatibilityMode.NEEDS_WRAPPER
 
-fun recordCallLabelForLambdaArgument(declaration: KtLabeledExpression, bindingTrace: BindingTrace) {
-    val lambdaExpression = declaration.baseExpression as? KtLambdaExpression ?: return
-    recordCallLabelForLambdaArgument(lambdaExpression.functionLiteral, bindingTrace)
-}
-
 fun recordCallLabelForLambdaArgument(declaration: KtFunctionLiteral, bindingTrace: BindingTrace) {
     fun storeLabelName(labelName: String) {
         val functionDescriptor = bindingTrace[BindingContext.FUNCTION, declaration] ?: return

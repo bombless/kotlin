@@ -743,11 +743,6 @@ class PsiInlineCodegen(
         if (isInliningParameter(argumentExpression, valueParameterDescriptor)) {
             val lambdaInfo = rememberClosure(argumentExpression, parameterType, valueParameterDescriptor)
 
-            when (argumentExpression) {
-                is KtLambdaExpression -> recordCallLabelForLambdaArgument(argumentExpression.functionLiteral, state.bindingTrace)
-                is KtLabeledExpression -> recordCallLabelForLambdaArgument(argumentExpression, state.bindingTrace)
-            }
-
             val receiverValue = getBoundCallableReferenceReceiver(argumentExpression)
             if (receiverValue != null) {
                 val receiver = codegen.generateReceiverValue(receiverValue, false)
